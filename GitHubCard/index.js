@@ -70,7 +70,7 @@ function cardMaker(data) {
   card.classList.add('card')
 
   let img = document.createElement('img')
-  img.setAttribute(src, data.avatar_url)
+  img.setAttribute('src', data.avatar_url)
   card.appendChild(img)
 
   let div = document.createElement('div')

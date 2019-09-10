@@ -3,14 +3,14 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/patrick-replogle')
-  .then((response) => {
-    console.log(response)
-  })
-  .catch((error) => {
-    console.log(error);
-    console.log('there was an error')
-  })
+// axios.get('https://api.github.com/users/patrick-replogle')
+//   .then((response) => {
+//     console.log(response)
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     console.log('there was an error')
+//   })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -65,6 +65,42 @@ const followersArray = [];
   bigknell
 */
 
+//add card container
+const cards = document.querySelector('.cards')
+
+//axios call and append personal card to container 
+axios.get('https://api.github.com/users/patrick-replogle')
+  .then((response) => {
+    console.log('Data:',response.data);
+    cards.appendChild(cardMaker(response.data));
+  })
+  .catch((error) => {
+    console.log(error)
+    console.log('Network request was unsuccessful')
+  })
+
+//array of instructors to add
+const instructors = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+];
+
+//foreach axios function to add instructors from array
+instructors.forEach((element) => {
+  axios.get('https://api.github.com/users/' + [element])
+  .then((response) => {
+    cards.appendChild(cardMaker(response.data))
+  })
+  .catch((error) => {
+    console.log(error)
+    console.log('Netword request was unsuccessful')
+  })
+})
+
+//function to make new cards
 function cardMaker(data) {
   let card = document.createElement('div')
   card.classList.add('card')
@@ -79,12 +115,12 @@ function cardMaker(data) {
 
   let h3 = document.createElement('h3')
   h3.classList.add('name')
-  h3.textContent = `${data.name}`
+  h3.textContent = data.name
   div.appendChild(h3)
 
   let p1 = document.createElement('p')
   p1.classList.add('username')
-  p1.textContent = `${data.login}`
+  p1.textContent = data.login
   div.appendChild(p1)
 
   let p2 = document.createElement('p')
@@ -92,11 +128,11 @@ function cardMaker(data) {
   div.appendChild(p2)
 
   let p3 = document.createElement('p')
-  p3.textContent = `Profile: `
-  let a = document.createElement('a');
-  a.setAttribute(href, data.html_url)
-  a.setAttribute(alt, 'address to user\'s github page')
-  p3.appendChild('a')
+  p3.textContent = `Profile: ${data.html_url}`
+  // let a = document.createElement('a');
+  // a.setAttribute('href', data.html_url)
+  //a.setAttribute('alt', 'address to user\'s github page')
+  // p3.appendChild('a')
   div.appendChild(p3);
 
   let p4 = document.createElement('p')
@@ -112,6 +148,4 @@ function cardMaker(data) {
   div.appendChild(p6)
 
   return card;
-
 }
-console.log(cardMaker)

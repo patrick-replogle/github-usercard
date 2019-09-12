@@ -61,32 +61,6 @@
   bigknell
 */
 
-//axios call and append personal card to container 
-// axios.get('https://api.github.com/users/patrick-replogle')
-//   .then((response) => {
-//     //console.log('Data:',response.data);
-//     const newCard = cardMaker(response.data)
-//     cards.appendChild(newCard);
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//     console.log('Network request was unsuccessful')
-//   })
-
-
-// //foreach axios function to add instructors from array
-// followersArray.forEach((element) => {
-//   axios.get('https://api.github.com/users/' + [element])
-//   .then((response) => {
-//     const newCard = cardMaker(response.data)
-//     cards.appendChild(newCard);
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//     console.log('Netword request was unsuccessful')
-//   })
-// })
-
 //array of instructors to add
 const followersArray = [
   'tetondan',
@@ -99,29 +73,30 @@ const followersArray = [
 //add card container
 const cards = document.querySelector('.cards')
 
-//add my own github followers
-axios.get('https://api.github.com/users/patrick-replogle/followers')
+//axios call and append personal card to container 
+axios.get('https://api.github.com/users/patrick-replogle')
   .then((response) => {
-    console.log(response)
-    response.data.forEach((item) => {
-      cards.appendChild(cardMaker(item))
-    })
+    console.log('Data:',response.data);
+    const newCard = cardMaker(response.data)
+    cards.appendChild(newCard);
   })
   .catch((error) => {
-    console.log('error', error)
+    console.log(error)
+    console.log('Network request was unsuccessful')
   })
 
-  //then add followers for instructors array
+
+//foreach axios function to add instructors from array
 followersArray.forEach((element) => {
-  axios.get('https://api.github.com/users/' + [element] + '/followers')
-    .then((response) => {
-      response.data.forEach((item) => {
-        cards.appendChild(cardMaker(item))
-      })
-    })
-    .catch((error) => {
-      console.log('error', error)
-    })
+  axios.get('https://api.github.com/users/' + [element])
+  .then((response) => {
+    const newCard = cardMaker(response.data)
+    cards.appendChild(newCard);
+  })
+  .catch((error) => {
+    console.log(error)
+    console.log('Netword request was unsuccessful')
+  })
 })
 
 
@@ -170,3 +145,29 @@ function cardMaker(data) {
 
   return card;
 }
+
+//couldn't retrieve the followers data specifics
+//add my own github followers
+// axios.get('https://api.github.com/users/patrick-replogle/followers')
+//   .then((response) => {
+//     console.log(response)
+//     response.data.forEach((item) => {
+//       cards.appendChild(cardMaker(item))
+//     })
+//   })
+//   .catch((error) => {
+//     console.log('error', error)
+//   })
+
+//   //then add followers for instructors array
+// followersArray.forEach((element) => {
+//   axios.get('https://api.github.com/users/' + [element] + '/followers')
+//     .then((response) => {
+//       response.data.forEach((item) => {
+//         cards.appendChild(cardMaker(item))
+//       })
+//     })
+//     .catch((error) => {
+//       console.log('error', error)
+//     })
+// })

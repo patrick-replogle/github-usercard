@@ -23,8 +23,6 @@
            create a new component and add it to the DOM as a child of .cards
 */
 
-
-
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
           , manually find some other users' github handles, or use the list found 
@@ -34,8 +32,6 @@
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
-
-const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -71,8 +67,9 @@ const cards = document.querySelector('.cards')
 //axios call and append personal card to container 
 axios.get('https://api.github.com/users/patrick-replogle')
   .then((response) => {
-    console.log('Data:',response.data);
-    cards.appendChild(cardMaker(response.data));
+    //console.log('Data:',response.data);
+    const newCard = cardMaker(response.data)
+    cards.appendChild(newCard);
   })
   .catch((error) => {
     console.log(error)
@@ -80,7 +77,7 @@ axios.get('https://api.github.com/users/patrick-replogle')
   })
 
 //array of instructors to add
-const instructors = [
+const followersArray = [
   'tetondan',
   'dustinmyers',
   'justsml',
@@ -89,10 +86,11 @@ const instructors = [
 ];
 
 //foreach axios function to add instructors from array
-instructors.forEach((element) => {
+followersArray.forEach((element) => {
   axios.get('https://api.github.com/users/' + [element])
   .then((response) => {
-    cards.appendChild(cardMaker(response.data))
+    const newCard = cardMaker(response.data)
+    cards.appendChild(newCard);
   })
   .catch((error) => {
     console.log(error)
@@ -129,10 +127,6 @@ function cardMaker(data) {
 
   let p3 = document.createElement('p')
   p3.textContent = `Profile: ${data.html_url}`
-  // let a = document.createElement('a');
-  // a.setAttribute('href', data.html_url)
-  //a.setAttribute('alt', 'address to user\'s github page')
-  // p3.appendChild('a')
   div.appendChild(p3);
 
   let p4 = document.createElement('p')
